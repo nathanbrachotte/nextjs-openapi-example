@@ -3,25 +3,16 @@
  * Do not make direct changes to the file.
  */
 
+
 export interface paths {
   "/currency/exchangerate": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
     get: operations["CurrencyController_getLatestRatesFromBase"];
-    put?: never;
     post: operations["CurrencyController_changeCurrencyValue"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
   };
 }
+
 export type webhooks = Record<string, never>;
+
 export interface components {
   schemas: {
     CurrencyExchangeResponseDto: {
@@ -29,7 +20,7 @@ export interface components {
       /** Format: date */
       date: string;
       rates: {
-        [key: string]: number | undefined;
+        [key: string]: number;
       };
     };
     CurrencyValueChangeBodyDto: {
@@ -45,24 +36,22 @@ export interface components {
   headers: never;
   pathItems: never;
 }
+
 export type $defs = Record<string, never>;
+
+export type external = Record<string, never>;
+
 export interface operations {
+
   CurrencyController_getLatestRatesFromBase: {
     parameters: {
       query: {
         base: "GBP" | "USD" | "EUR";
       };
-      header?: never;
-      path?: never;
-      cookie?: never;
     };
-    requestBody?: never;
     responses: {
       /** @description Return all currency exchange rates */
       200: {
-        headers: {
-          [name: string]: unknown;
-        };
         content: {
           "application/json": components["schemas"]["CurrencyExchangeResponseDto"];
         };
@@ -70,12 +59,6 @@ export interface operations {
     };
   };
   CurrencyController_changeCurrencyValue: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
     requestBody: {
       content: {
         "application/json": components["schemas"]["CurrencyValueChangeBodyDto"];
@@ -84,9 +67,6 @@ export interface operations {
     responses: {
       /** @description Currency value updated successfully */
       200: {
-        headers: {
-          [name: string]: unknown;
-        };
         content: {
           "application/json": {
             message?: string;
