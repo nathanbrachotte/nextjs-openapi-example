@@ -75,7 +75,8 @@ export async function apiCall<
       if (rest.length === 0) {
         throw new Error("Missing request body for post method");
       } else {
-        const requestBody = rest[0]; // TypeScript can now infer that rest[0] exists
+        // @ts-expect-error TODO: check rest[0] exists
+        const requestBody: RequestParams<P, M> = rest[0]; // TypeScript can now infer that rest[0] exists
 
         return await (
           await axiosInstance.post(

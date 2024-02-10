@@ -1,37 +1,18 @@
-import { apiCall } from "@/apiCall";
-import { AllPaths, RequestParams } from "@/openApiTypes";
+//
+//
+import createClient from "openapi-fetch";
+import type { paths } from "../openApi";
 
-const path = "/currency/exchangerate";
+const { GET } = createClient<paths>({
+  baseUrl: "https://api.example.com/v1/",
+});
 
-type ExchangeRateQuery = RequestParams<typeof path, "get">["query"]["base"];
-
-// Usage
-const { data: exchangeRate } = useGetExchangeRate("EUR");
-
-// Client side
-export const useGetExchangeRate = (baseCurrency: ExchangeRateQuery) => {
-  // Or whichever function that returns a token from the client
-  const { getToken } = useAuth();
-
-  // Example with react-query
-  return useQuery({
-    queryKey: [path],
-    queryFn: async () =>
-      apiCall(getToken, path, "get", {
-        query: {
-          base: baseCurrency,
-        },
-      }),
-  });
-};
-
-// Server side
-export async function getExchangeRate(baseCurrency: ExchangeRateQuery) {
-  const { getToken } = auth();
-
-  return await apiCall(getToken, path, "get", {
-    query: {
-      base: baseCurrency,
+export async function getExchangeRate() {
+  const { data, error } = await GET("/currency/exchangerate", {
+    params: {
+      query: {
+        base: "EUR",
+      },
     },
   });
 }
